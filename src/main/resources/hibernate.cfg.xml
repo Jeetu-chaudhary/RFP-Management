@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC   "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory>
+	
+		<!-- Database connection settings -->
+		<property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+		<property name="connection.url">jdbc:mysql://localhost:3306/VelocityPrjdb</property>
+		<property name="connection.username">root</property>
+		<property name="connection.password">$Myp@ssw0rd!</property>
+
+		<!-- JDBC connection pool (use the built-in) -->
+		<property name="connection.pool_size">10</property>
+
+		<!-- SQL dialect -->
+		<property name="hibernate.dialect">org.hibernate.dialect.MySQL8Dialect</property>
+
+		<!-- Disable the second-level cache -->
+		<property name="hibernate.show_sql">false</property>
+		<property name="hibernate.format_sql">true</property>
+		<property name="hibernate.hbm2ddl.auto">update</property>
+
+		<!-- Mention here all the model classes along with their package name -->
+		<mapping class="com.model.User" />
+		<mapping class="com.model.Category" />
+		<mapping class="com.model.VendorRegister" />
+		<mapping class="com.model.RFPList" />
+	 <mapping class="com.model.RFPQuote" />  
+		<mapping class="com.model.VendorCategoryMap" />
+		
+	</session-factory>
+</hibernate-configuration>
