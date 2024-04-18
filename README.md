@@ -74,3 +74,111 @@ After clicking 'Apply' on the RFP list page, a form appears. Vendors provide nec
 
 
 
+## Database Code
+
+create database as below:
+
+```bash
+ 
+
+create database VelocityPrjdb;
+use velocityPrjdb;
+
+create table RFP_categories(
+	categories_id int not null primary key AUTO_INCREMENT,
+	categories_name varchar(100),
+	status boolean
+	);
+    alter table rfp_categories add create_date date;
+   
+create table RFP_user_details(
+user_id int not null primary key auto_increment,
+first_name varchar(50) not null ,
+last_name  varchar(50) not null ,
+email varchar(100) not null ,
+password varchar(100)not null, 
+role varchar(10) not null,
+status boolean
+);
+   
+create table RFP_vendor_detail(
+user_id int not null primary key,
+first_name varchar(50) not null ,
+last_name  varchar(50) not null ,
+email varchar(100) not null ,
+password varchar(100)not null ,
+revenue DECIMAL(10, 2) NOT NULL,
+No_of_employee int not null ,
+GST_No varchar(15) not null ,
+PAN_No varchar(10) not null ,
+phone_No varchar(15) not null ,
+create_date date,
+foreign key(user_id) references RFP_user_details(user_id) on delete cascade
+);
+ alter table RFP_vendor_detail add status boolean;
+
+
+
+CREATE TABLE vendor_category_map (
+    map_id INT AUTO_INCREMENT PRIMARY KEY,
+    vendor_id INT,
+    category_id INT,
+    FOREIGN KEY (vendor_id) REFERENCES  RFP_vendor_detail(user_id),
+    FOREIGN KEY (category_id) REFERENCES RFP_categories (categories_id),
+    unique key(vendor_id,category_id)
+);
+
+
+
+create table RFP_list(
+RFP_No int not null primary key auto_increment,
+Title varchar(500),
+Lastdate date,
+minAmount DECIMAL(10, 2) ,
+maxAmount DECIMAL(10, 2) ,
+Item_Description varchar(1000),
+Quantity  int,
+category_id int,
+aminStatus boolean default true,
+ vendorStatus boolean default false,
+ create_date date,
+
+foreign key(category_id) references RFP_categories(categories_id) on delete cascade
+);
+
+
+create table RFP_quotes(
+quoteId int not null primary key auto_increment,
+vendor_id int not null ,
+vendor_price DECIMAL(10, 2),
+Item_Description varchar(1000),
+Quantity int,
+total_cost DECIMAL(10, 2),
+RFP_No int ,
+create_date date,
+foreign key(vendor_id) references RFP_vendor_detail(user_id) on delete cascade,
+foreign key(RFP_No) references RFP_list(RFP_No) on delete cascade
+);
+ 
+
+INSERT INTO RFP_categories (categories_name, status, create_date)
+VALUES 
+('Finance', 1, '2024-03-28'),
+('Healthcare', 1, '2024-03-28'),
+('Construction', 1, '2024-03-28');
+
+
+INSERT INTO RFP_user_details (first_name, last_name, email, password, role, status) VALUES
+('John', 'Doe', 'john@example.com', 'password123', 'Admin', true);
+
+
+
+
+
+
+
+
+
+
+```
+    
